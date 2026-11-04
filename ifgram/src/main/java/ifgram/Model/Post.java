@@ -77,13 +77,15 @@ public class Post {
 
     // Por que o relacionamento é @ManyToOne no Post e não @OneToMany?
 
-    //Porque a anotação reflete a perspectiva da classe Post: muitos posts (Many) pertencem a um único usuário (One).
-    //A anotação @OneToMany seria usada apenas na classe User, onde um usuário possui muitos posts.
+    /*Porque a anotação reflete a perspectiva da classe Post: muitos posts (Many) pertencem a um único usuário (One).
+    A anotação @OneToMany seria usada apenas na classe User, onde um usuário possui muitos posts.
+     */
 
 
     //Quem guarda a chave estrangeira, a tabela tb_post ou a tb_user?
 
-    //A tabela tb_post. Em relacionamentos de banco de dados, o lado "muitos" é quem sempre guarda a chave estrangeira (user_id)
-    //referenciando o ID do usuário na tabela tb_user.
+    /*A tabela tb_post. Em relacionamentos de banco de dados, o lado "muitos" é quem sempre guarda a chave estrangeira (user_id)
+    referenciando o ID do usuário na tabela tb_user.
+     */
 }
 

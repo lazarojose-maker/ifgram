@@ -1,6 +1,6 @@
 package ifgram.service;
 
-import ifgram.Model.Post; // Ajustado para letra minúscula (padrão Java)
+import ifgram.Model.Post;
 import ifgram.Model.User;
 import ifgram.Repository.PostRepository;
 import ifgram.Repository.UserRepository;

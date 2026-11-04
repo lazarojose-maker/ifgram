@@ -12,5 +12,6 @@ public record PostRequest(
         String legenda,
 
         @NotNull(message = "O ID do autor não pode ser nulo")
-        Long autorId
-) {}
+        Long autorId)
+{ }
+
