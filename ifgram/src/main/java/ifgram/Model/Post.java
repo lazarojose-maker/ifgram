@@ -33,11 +33,9 @@ public class Post {
     @JoinColumn(name = "user_id")
     private User autor;
 
-    // Construtor sem argumentos exigido pelo JPA
     public Post() {
     }
 
-    // Construtor da aplicação
     public Post(String imagemUrl, String legenda, User autor) {
         this.imagemUrl = imagemUrl;
         this.legenda = legenda;
@@ -64,16 +62,7 @@ public class Post {
     public User getAutor() {
         return autor;
     }
-
-    public void setLegenda(@Size(max = 300, message = "A legenda pode ter no máximo 300 caracteres") String legenda) {
-    }
-
-    public void setImagemUrl(@NotBlank(message = "A URL da imagem não pode estar em branco") String s) {
-    }
-
-    public void setAutor(User autor) {
-
-    }
+}
 
     // Por que o relacionamento é @ManyToOne no Post e não @OneToMany?
 
@@ -87,5 +76,5 @@ public class Post {
     /*A tabela tb_post. Em relacionamentos de banco de dados, o lado "muitos" é quem sempre guarda a chave estrangeira (user_id)
     referenciando o ID do usuário na tabela tb_user.
      */
-}
+
 

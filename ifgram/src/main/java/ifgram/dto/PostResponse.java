@@ -9,18 +9,15 @@ public record PostResponse(
         String imagemUrl,
         String legenda,
         LocalDateTime criadoEm,
-        Long autorId,
-        String autorNome
+        UserResponse autor
 ) {
-    // Método estático para converter a Entidade em DTO
     public static PostResponse from(Post post) {
         return new PostResponse(
                 post.getId(),
                 post.getImagemUrl(),
                 post.getLegenda(),
                 post.getCriadoEm(),
-                post.getAutor().getId(),
-                post.getAutor().getNome()
+                UserResponse.from(post.getAutor())
         );
     }
 }

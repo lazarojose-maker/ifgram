@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional(readOnly = true)
 public class PostService {
 
     private final PostRepository postRepository;
@@ -26,41 +25,40 @@ public class PostService {
     @Transactional
     public PostResponse criar(PostRequest request) {
         User autor = userRepository.findById(request.autorId())
-                .orElseThrow(() -> new RuntimeException("Autor não encontrado com o ID: " + request.autorId()));
+                .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado com ID: " + request.autorId()));
 
-        Post post = new Post();
-        post.setImagemUrl(request.imagemUrl());
-        post.setLegenda(request.legenda());
-        post.setAutor(autor);
-
+        Post post = new Post(request.imagemUrl(), request.legenda(), autor);
         Post postSalvo = postRepository.save(post);
         return PostResponse.from(postSalvo);
     }
 
-    public List<PostResponse> listarFeed() {
-        return postRepository.findAllByOrderByCriadoEmDesc()
+    @Transactional(readOnly = true)
+    public List<PostResponse> getFeed() {
+        return postRepository.findFeed()
                 .stream()
                 .map(PostResponse::from)
                 .toList();
     }
 
-    public List<PostResponse> listarPorAutor(Long autorId) {
-        return postRepository.findByAutor_IdOrderByCriadoEmDesc(autorId)
-                .stream()
-                .map(PostResponse::from)
-                .toList();
-    }
-
+    @Transactional(readOnly = true)
     public PostResponse buscarPorId(Long id) {
         Post post = postRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Post não encontrado com o ID: " + id));
+                .orElseThrow(() -> new IllegalArgumentException("Post não encontrado com ID: " + id));
         return PostResponse.from(post);
+    }
+
+    @Transactional(readOnly = true)
+    public List<PostResponse> buscarPorAutor(Long autorId) {
+        return postRepository.findByAutorId(autorId)
+                .stream()
+                .map(PostResponse::from)
+                .toList();
     }
 
     @Transactional
     public void deletar(Long id) {
         if (!postRepository.existsById(id)) {
-            throw new RuntimeException("Post não encontrado com o ID para remoção: " + id);
+            throw new IllegalArgumentException("Post não encontrado com ID: " + id);
         }
         postRepository.deleteById(id);
     }
